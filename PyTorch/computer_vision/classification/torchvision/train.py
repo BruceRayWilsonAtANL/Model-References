@@ -247,6 +247,10 @@ def main(args):
 
     train_dir = os.path.join(args.data_path, 'train')
     val_dir = os.path.join(args.data_path, 'val')
+
+    print(f'train_dir: {train_dir}')
+    print(f'val_dir: {val_dir}')
+    
     dataset, dataset_test, train_sampler, test_sampler = load_data(train_dir, val_dir,
                                                                    args.cache_dataset, args.distributed)
     if args.device == 'hpu' and args.workers > 0:
