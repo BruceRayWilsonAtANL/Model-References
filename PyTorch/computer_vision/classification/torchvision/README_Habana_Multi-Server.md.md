@@ -136,6 +136,9 @@ Using LARS optimizer usually requires changing the default values of some hyperp
 
 - ResNet50, lazy mode, BF16 mixed precision, batch Size 256, custom learning rate, Habana dataloader (with hardware decode support on **Gaudi2**), 1 HPU on a single server:
 
+The path **/lambda_stor/habana/data/tensorflow/imagenet** is poorly named.  The files stored at that
+location are PyTorch compatible and not TensorFlow compatible.
+
 This works.  20220825
 
 ```bash
