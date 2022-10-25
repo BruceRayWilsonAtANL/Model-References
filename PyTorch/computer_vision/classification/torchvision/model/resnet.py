@@ -5,7 +5,7 @@ import torch.nn as nn
 from .utils import load_state_dict_from_url
 
 
-__all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
+__all__ = ['ResNet', 'ResNetA', 'ResNetB', 'ResNetB2', 'resnet18', 'resnet34', 'resnet50', 'resnet101',
            'resnet152', 'resnext50_32x4d', 'resnext101_32x4d', 'resnext101_32x8d',
            'wide_resnet50_2', 'wide_resnet101_2']
 
@@ -123,7 +123,7 @@ class ResNet(nn.Module):
 
     def __init__(self, block, layers, num_classes=1000, zero_init_residual=False,
                  groups=1, width_per_group=64, replace_stride_with_dilation=None,
-                 norm_layer=None):
+                 norm_layer=None, image_channels=3):
         super(ResNet, self).__init__()
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
@@ -140,7 +140,7 @@ class ResNet(nn.Module):
                              "or a 3-element tuple, got {}".format(replace_stride_with_dilation))
         self.groups = groups
         self.base_width = width_per_group
-        self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3,
+        self.conv1 = nn.Conv2d(image_channels, self.inplanes, kernel_size=7, stride=2, padding=3,
                                bias=False)
         self.bn1 = norm_layer(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
@@ -219,13 +219,32 @@ class ResNet(nn.Module):
         return self._forward_impl(x)
 
 
-def _resnet(arch, block, layers, pretrained, progress, **kwargs):
-    model = ResNet(block, layers, **kwargs)
+def _resnet(arch, block, layers, pretrained, progress, image_channels=3, num_classes=1000, **kwargs):
+    model = ResNet(block, layers, image_channels, num_classes, **kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls[arch],
                                               progress=progress)
         model.load_state_dict(state_dict)
     return model
+
+
+def ResNetA(image_channels=5, num_classes=7, pretrained=False, progress=True, **kwargs):
+    #return ResNet(block, [3, 4, 5, 3], img_channel, num_classes, args)
+    return _resnet('ResNetA', BasicBlock, [3, 4, 5, 3], pretrained, progress,
+                   image_channels, num_classes, **kwargs)
+
+
+def ResNetB(image_channels=5, num_classes=7, pretrained=False, progress=True, **kwargs):
+    #return ResNet(block, [3, 3, 3, 3], img_channel, num_classes, args)
+    return _resnet('ResNetB', BasicBlock, [3, 3, 3, 3], pretrained, progress,
+                   image_channels, num_classes, **kwargs)
+
+
+def ResNetB2(image_channels=5, num_classes=2, pretrained=False, progress=True, **kwargs):
+    #return ResNet(block, [3, 4, 5, 3], img_channel, num_classes, args)
+    return _resnet('ResNetA', BasicBlock, [3, 4, 5, 3], pretrained, progress,
+                   image_channels, num_classes, **kwargs)
+
 
 
 def resnet18(pretrained=False, progress=True, **kwargs):

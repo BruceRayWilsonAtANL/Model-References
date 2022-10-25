@@ -250,7 +250,7 @@ def main(args):
 
     print(f'train_dir: {train_dir}')
     print(f'val_dir: {val_dir}')
-    
+
     dataset, dataset_test, train_sampler, test_sampler = load_data(train_dir, val_dir,
                                                                    args.cache_dataset, args.distributed)
     if args.device == 'hpu' and args.workers > 0:
@@ -282,6 +282,8 @@ def main(args):
     #Import only resnext101_32x4d from a local copy since torchvision
     # package doesn't support resnext101_32x4d variant
     if 'resnext101_32x4d' in args.model:
+        model = resnet_models.__dict__[args.model](pretrained=args.pretrained)
+    elif args.model in ['ResNetA', 'ResNetB', 'ResNetB2']:
         model = resnet_models.__dict__[args.model](pretrained=args.pretrained)
     else:
         model = torchvision.models.__dict__[
