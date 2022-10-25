@@ -228,7 +228,8 @@ def _resnet(arch, block, layers, pretrained, progress, image_channels=3, num_cla
     return model
 
 
-def ResNetA(image_channels=5, num_classes=7, pretrained=False, progress=True, **kwargs):
+#def ResNetA(image_channels=5, num_classes=7, pretrained=False, progress=True, **kwargs):
+def ResNetA(image_channels=3, num_classes=1000, pretrained=False, progress=True, **kwargs):
     #return ResNet(block, [3, 4, 5, 3], img_channel, num_classes, args)
     return _resnet('ResNetA', BasicBlock, [3, 4, 5, 3], pretrained, progress,
                    image_channels, num_classes, **kwargs)
