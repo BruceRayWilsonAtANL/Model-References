@@ -136,8 +136,10 @@ Using LARS optimizer usually requires changing the default values of some hyperp
 
 - ResNet50, lazy mode, BF16 mixed precision, batch Size 256, custom learning rate, Habana dataloader (with hardware decode support on **Gaudi2**), 1 HPU on a single server:
 
+This works.  20220825
+
 ```bash
-$PYTHON -u train.py --dl-worker-type HABANA --batch-size 256 --model resnet50 --device hpu --workers 8 --print-freq 20 --dl-time-exclude False --deterministic --data-path /lambda_stor/data/imagenet --epochs 90 --hmp --hmp-bf16 ./ops_bf16_Resnet.txt --hmp-fp32 ./ops_fp32_Resnet.txt  --lr 0.1 --custom-lr-values 0.1 0.01 0.001 0.0001 --custom-lr-milestones 0 30 60 80
+$PYTHON -u train.py --dl-worker-type HABANA --batch-size 256 --model resnet50 --device hpu --workers 8 --print-freq 20 --dl-time-exclude False --deterministic --data-path /lambda_stor/habana/data/tensorflow/imagenet --epochs 90 --hmp --hmp-bf16 ./ops_bf16_Resnet.txt --hmp-fp32 ./ops_fp32_Resnet.txt  --lr 0.1 --custom-lr-values 0.1 0.01 0.001 0.0001 --custom-lr-milestones 0 30 60 80
 ```
 
 ### One HPU on 1 server, batch 256, 25 epochs, BF16 precision, LARS
