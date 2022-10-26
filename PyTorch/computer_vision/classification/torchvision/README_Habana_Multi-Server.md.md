@@ -167,6 +167,50 @@ time $PYTHON -u train.py \
     --custom-lr-milestones 0 30 60 80
 ```
 
+This works.  20221025.  Using a modified ResNetA that works with standard jpeg files.
+
+```bash
+time $PYTHON -u train.py \
+    --dl-worker-type HABANA \
+    --batch-size 256 \
+    --model ResNetA \
+    --device hpu \
+    --workers 8 \
+    --print-freq 20 \
+    --dl-time-exclude False \
+    --deterministic \
+    --data-path /lambda_stor/habana/data/tensorflow/imagenet \
+    --epochs 1 \
+    --hmp \
+    --hmp-bf16 ./ops_bf16_Resnet.txt \
+    --hmp-fp32 ./ops_fp32_Resnet.txt \
+    --lr 0.1 \
+    --custom-lr-values 0.1 0.01 0.001 0.0001 \
+    --custom-lr-milestones 0 30 60 80
+```
+
+Using a ResNetA.
+
+```bash
+time $PYTHON -u train.py \
+    --dl-worker-type HABANA \
+    --batch-size 256 \
+    --model ResNetA \
+    --device hpu \
+    --workers 8 \
+    --print-freq 20 \
+    --dl-time-exclude False \
+    --deterministic \
+    --data-path ~/HL/pipeline_resnet_hl \
+    --epochs 1 \
+    --hmp \
+    --hmp-bf16 ./ops_bf16_Resnet.txt \
+    --hmp-fp32 ./ops_fp32_Resnet.txt \
+    --lr 0.1 \
+    --custom-lr-values 0.1 0.01 0.001 0.0001 \
+    --custom-lr-milestones 0 30 60 80
+```
+
 ### One HPU on 1 server, batch 256, 25 epochs, BF16 precision, LARS
 
 Scaling Runs
