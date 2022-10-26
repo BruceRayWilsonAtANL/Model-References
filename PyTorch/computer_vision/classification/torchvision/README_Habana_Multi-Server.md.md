@@ -189,7 +189,7 @@ time $PYTHON -u train.py \
     --custom-lr-milestones 0 30 60 80
 ```
 
-Using a ResNetA.
+Using a ResNetA.  Oops.  Does not work.  Use my dataloader.
 
 ```bash
 time $PYTHON -u train.py \
