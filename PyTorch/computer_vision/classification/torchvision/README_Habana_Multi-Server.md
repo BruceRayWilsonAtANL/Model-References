@@ -193,7 +193,7 @@ Using a ResNetA.  Oops.  Does not work.  Use my dataloader.
 
 ```bash
 time $PYTHON -u train.py \
-    --dl-worker-type HABANA \
+    --dl-worker-type MP \
     --batch-size 256 \
     --model ResNetA \
     --device hpu \
